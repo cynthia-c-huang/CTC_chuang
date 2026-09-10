@@ -22,6 +22,12 @@ import { NextResponse } from 'next/server';
  */
 export function handleError(err: unknown): NextResponse {
   console.error('Unhandled API error:', err);
-
+  if (err instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: 'Invalid JSON body' },
+        { status: 400 }
+      );
+    }
+    
   return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
 }
